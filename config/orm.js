@@ -17,7 +17,6 @@ var orm = {
             if (err) throw err;
             cb(rows);
         })
-        console.log("in insert one");
     },
     updateOne: (table, id, cb) => {
         // query here
@@ -26,7 +25,6 @@ var orm = {
             if (err) throw err;
             cb(rows);
         })
-        console.log("inside update one");
     }
 }
 
