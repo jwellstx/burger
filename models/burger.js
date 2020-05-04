@@ -6,13 +6,13 @@ var burger = {
             cb(res);
         });
     },
-    insertOne: (cb) => {
-        orm.insertOne("burgers", (res) => {
+    insertOne: (burgerType, cb) => {
+        orm.insertOne("burgers", burgerType, (res) => {
             cb(res)
         });
     },
-    updateOne: (cb) => {
-        orm.updateOne("burgers", (res) => {
+    updateOne: (id, cb) => {
+        orm.updateOne("burgers", id, (res) => {
             cb(res)
         });
     }
