@@ -3,7 +3,7 @@ var connection = require("./connection.js");
 
 var orm = {
     selectAll: (table, cb) => {
-        this.checkConnection();  // because we are losing connection on heroku
+        orm.checkConnection();  // because we are losing connection on heroku
 
         // query here
         var queryString = "SELECT * FROM " + table + ";";
@@ -13,7 +13,7 @@ var orm = {
         });
     },
     insertOne: (table, burgerType, cb) => {
-        this.checkConnection();  // because we are losing connection on heroku
+        orm.checkConnection();  // because we are losing connection on heroku
 
         // query here
         var queryString = "INSERT INTO " + table + " (burger_name, devoured) VALUES (?, 0)";
@@ -23,7 +23,7 @@ var orm = {
         })
     },
     updateOne: (table, id, cb) => {
-        this.checkConnection();  // because we are losing connection on heroku
+        orm.checkConnection();  // because we are losing connection on heroku
 
         // query here
         var queryString = "UPDATE " + table + " SET devoured = 1 WHERE id = ?"
@@ -33,6 +33,7 @@ var orm = {
         })
     },
     checkConnection: () => {
+        console.log(connection.state);
         if(connection.state === 'disconnected') {
             connection.connect(err => {
                 if (err) throw "Connection to database failed with err: " + err;
