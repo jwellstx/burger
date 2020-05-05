@@ -6,7 +6,7 @@ var orm = {
         // query here
         var queryString = "SELECT * FROM " + table + ";";
         connection.query(queryString, (err, rows) => {
-            if (err) throw err;
+            if (err) this.reconnect();  // because we are losing connection on heroku
             cb(rows);
         });
     },
@@ -14,7 +14,7 @@ var orm = {
         // query here
         var queryString = "INSERT INTO " + table + " (burger_name, devoured) VALUES (?, 0)";
         connection.query(queryString, burgerType, (err, rows) => {
-            if (err) throw err;
+            if (err) this.reconnect();  // because we are losing connection on heroku
             cb(rows);
         })
     },
@@ -22,9 +22,20 @@ var orm = {
         // query here
         var queryString = "UPDATE " + table + " SET devoured = 1 WHERE id = ?"
         connection.query(queryString, id, (err, rows) => {
-            if (err) throw err;
+            if (err) this.reconnect();  // because we are losing connection on heroku
             cb(rows);
         })
+    },
+    reconnect: () => {
+        try {
+            connection.connect(err => {
+                if (err) throw "Connection to database failed with err: " + err;
+                console.log("connected as id " + connection.threadId);
+            });
+        }
+        catch(error) {
+            throw "Connect to database could not be established!!";
+        }
     }
 }
 
