@@ -3,7 +3,6 @@ var connection = require("./connection.js");
 var orm = {
     selectAll: (table, cb) => {
         var queryString = "SELECT * FROM " + table + ";";
-        console.log(queryString);
         connection.query(queryString, (err, rows) => {
             if (err) throw err;
             cb(rows);
